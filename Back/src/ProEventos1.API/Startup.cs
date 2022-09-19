@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ProEventos1.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProEventos1.API
 {
@@ -26,7 +28,9 @@ namespace ProEventos1.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<DataContext>(
+                context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
+            );
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
